@@ -1,0 +1,60 @@
+﻿<Window x:Class="WinPidKiller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WinPidKiller"
+        mc:Ignorable="d"
+        Title="Pid Killer" Height="450" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card Grid.Row="0" Padding="8" Margin="8,5,8,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="110"></ColumnDefinition>
+                    <ColumnDefinition Width="110"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" Text="{Binding Path=Port}" HorizontalAlignment="Stretch" Margin="0,0,110,0" FontSize="20" VerticalAlignment="Center"/>
+                <Button Content="检索" Grid.Column="0" Width="100" HorizontalAlignment="Right" Command="{Binding QueryPortCommand}"/>
+                <Button Content="刷新" Grid.Column="1" Width="100" HorizontalAlignment="Right" Command="{Binding RefreshCommand}"/>
+                <Button Content="杀死" Grid.Column="2" Width="100" HorizontalAlignment="Right" Command="{Binding KillCommand}"/>
+            </Grid>
+        </materialDesign:Card>
+
+        <materialDesign:Card Grid.Row="1" Padding="8" Margin="8,5,8,5" >
+            <DataGrid 
+                x:Name="dataGrid"
+                FontSize="15"
+                AlternationCount="2"
+                GridLinesVisibility="Vertical"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding Path=ProcessItemList}"
+                      >
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Width="50" Header="" Binding="{Binding Path=SelectItem,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" CanUserSort="False" />
+                    <DataGridTextColumn Width="Auto" Header="进程名" Binding="{Binding Path=ProcessInfo.Name}"/>
+                    <DataGridTextColumn Width="100" Header="PID"  Binding="{Binding Path=ProcessInfo.Pid}"/>
+                    <DataGridTextColumn Width="80" Header="协议"  Binding="{Binding Path=ProcessInfo.AgreeMent}"/>
+                    <DataGridTextColumn Width="200" Header="本机IP:端口"  Binding="{Binding Path=ProcessInfo.LocalIp}"/>
+                    <DataGridTextColumn Width="200" Header="远程IP:端口"  Binding="{Binding Path=ProcessInfo.RemoteIp}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </materialDesign:Card>
+    
+    </Grid>
+</Window>
